@@ -1,0 +1,16 @@
+{
+	"name": "ds_emsLocations",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_yycOpenDataPortal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "s6f4-ijrf.json"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

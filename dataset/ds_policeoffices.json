@@ -1,0 +1,16 @@
+{
+	"name": "ds_policeoffices",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_yycOpenDataPortal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "ap4r-bav3.json"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

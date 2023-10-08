@@ -1,0 +1,9 @@
+{
+	"name": "DFyycOpenData",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "20748282-cfd6-4f9a-8f40-09fbf5c12af5",
+		"tenantId": "9f107ea1-b9bf-4812-a3b9-ccdfe5e492e5"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "ds_communityDisorder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_yycOpenDataPortal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "h3h6-kgme.json"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

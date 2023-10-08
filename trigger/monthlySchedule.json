@@ -1,0 +1,60 @@
+{
+	"name": "monthlySchedule",
+	"properties": {
+		"description": "Run every month on the 18th",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline Move rec facilities data to data lake",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline Move community disorder data to data lake",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline move ems location to data lake",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline move fire station location data to data lake",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Pipeline move police office data to data lake",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 1,
+				"startTime": "2023-10-07T17:38:00",
+				"timeZone": "Mountain Standard Time",
+				"schedule": {
+					"minutes": [
+						10
+					],
+					"hours": [
+						5
+					],
+					"monthDays": [
+						18
+					]
+				}
+			}
+		}
+	}
+}
