@@ -1,0 +1,743 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "DFyycOpenData"
+		},
+		"ls_datalakestorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_datalakestorage'"
+		},
+		"ls_datalakestorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageyycopendata.dfs.core.windows.net/"
+		},
+		"ls_yycOpenDataPortal_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://data.calgary.ca/resource/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_datalakestorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ls_datalakestorage_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ls_datalakestorage_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_yycOpenDataPortal')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('ls_yycOpenDataPortal_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_communityDisorder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_yycOpenDataPortal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "h3h6-kgme.json"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_communityDistrictBoundaries')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_yycOpenDataPortal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "surr-xmvs.json"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_emsLocations')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_yycOpenDataPortal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "s6f4-ijrf.json"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_firestationLocations')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_yycOpenDataPortal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "cqsb-2hhg.json"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_policeoffices')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_yycOpenDataPortal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "ap4r-bav3.json"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_recFacilities')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_yycOpenDataPortal",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "hxfu-6d96.json"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/yycEmsLocations')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dirrawdata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/yycFireStations')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dirrawdata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/yycPoliceOffices')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dirrawdata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/yycRecFacilities')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dirrawdata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/yyccommunitydisorder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dirrawdata"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/yycCommunityDistrictBoundaries')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_datalakestorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "dirrawdata"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"body": {
+							"type": "object",
+							"properties": {
+								":@computed_region_4a3i_ccfj": {
+									"type": "string"
+								},
+								":@computed_region_4b54_tmc4": {
+									"type": "string"
+								},
+								":@computed_region_kxmf_bzkv": {
+									"type": "string"
+								},
+								":@computed_region_p8tp_5dkv": {
+									"type": "string"
+								},
+								"address": {
+									"type": "string"
+								},
+								"community": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								},
+								"non_emergency_info": {
+									"type": "string"
+								},
+								"point": {
+									"type": "object",
+									"properties": {
+										"coordinates": {
+											"type": "array",
+											"items": {
+												"type": "string"
+											}
+										},
+										"type": {
+											"type": "string"
+										}
+									}
+								},
+								"stn_num": {
+									"type": "string"
+								},
+								"modified_dt": {
+									"type": "string"
+								}
+							}
+						},
+						"headers": {
+							"type": "object",
+							"properties": {
+								"X-SODA2-Fields": {
+									"type": "string"
+								},
+								"Vary": {
+									"type": "string"
+								},
+								"Access-Control-Allow-Origin": {
+									"type": "string"
+								},
+								"Transfer-Encoding": {
+									"type": "string"
+								},
+								"Last-Modified": {
+									"type": "string"
+								},
+								"Server": {
+									"type": "string"
+								},
+								"Strict-Transport-Security": {
+									"type": "string"
+								},
+								"X-Socrata-RequestId": {
+									"type": "string"
+								},
+								"X-SODA2-Data-Out-Of-Date": {
+									"type": "string"
+								},
+								"Connection": {
+									"type": "string"
+								},
+								"X-SODA2-Types": {
+									"type": "string"
+								},
+								"X-Socrata-Region": {
+									"type": "string"
+								},
+								"X-SODA2-Secondary-Last-Modified": {
+									"type": "string"
+								},
+								"Age": {
+									"type": "string"
+								},
+								"Content-Type": {
+									"type": "string"
+								},
+								"X-SODA2-Truth-Last-Modified": {
+									"type": "string"
+								},
+								"Date": {
+									"type": "string"
+								},
+								"ETag": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ingest_community_disorder')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Ingest community disorder data into data lake storage",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_communityDisorder",
+								"type": "DatasetReference"
+							},
+							"name": "dfCommunityDisorder"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "yyccommunitydisorder",
+								"type": "DatasetReference"
+							},
+							"name": "dfdatalakestorage"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     httpMethod: 'GET',",
+						"     timeout: 10,",
+						"     requestInterval: 0,",
+						"     paginationRules: ['supportRFC5988' -> 'true'],",
+						"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dfCommunityDisorder",
+						"dfCommunityDisorder sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> dfdatalakestorage"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_communityDisorder')]",
+				"[concat(variables('factoryId'), '/datasets/yyccommunitydisorder')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ingest_ems_locations')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_emsLocations",
+								"type": "DatasetReference"
+							},
+							"name": "dfemsLocations"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "yycEmsLocations",
+								"type": "DatasetReference"
+							},
+							"name": "dsemsLocations",
+							"rejectedDataLinkedService": {
+								"referenceName": "ls_datalakestorage",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     httpMethod: 'GET',",
+						"     timeout: 30,",
+						"     requestInterval: 0,",
+						"     paginationRules: ['supportRFC5988' -> 'true'],",
+						"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dfemsLocations",
+						"dfemsLocations sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> dsemsLocations"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_emsLocations')]",
+				"[concat(variables('factoryId'), '/datasets/yycEmsLocations')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ingest_fire_station_locations')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_firestationLocations",
+								"type": "DatasetReference"
+							},
+							"name": "dfFireStations"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "yycFireStations",
+								"type": "DatasetReference"
+							},
+							"name": "dfFireStationLocations",
+							"rejectedDataLinkedService": {
+								"referenceName": "ls_datalakestorage",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     httpMethod: 'GET',",
+						"     timeout: 30,",
+						"     requestInterval: 0,",
+						"     paginationRules: ['supportRFC5988' -> 'true'],",
+						"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dfFireStations",
+						"dfFireStations sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> dfFireStationLocations"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_firestationLocations')]",
+				"[concat(variables('factoryId'), '/datasets/yycFireStations')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ingest_police_offices')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_policeoffices",
+								"type": "DatasetReference"
+							},
+							"name": "dspoliceoffices"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "yycPoliceOffices",
+								"type": "DatasetReference"
+							},
+							"name": "dfdatalakestoragepopo",
+							"rejectedDataLinkedService": {
+								"referenceName": "ls_datalakestorage",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     httpMethod: 'GET',",
+						"     timeout: 30,",
+						"     requestInterval: 0,",
+						"     paginationRules: ['supportRFC5988' -> 'true'],",
+						"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dspoliceoffices",
+						"dspoliceoffices sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> dfdatalakestoragepopo"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_policeoffices')]",
+				"[concat(variables('factoryId'), '/datasets/yycPoliceOffices')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_ingest_recreation_facilities')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_recFacilities",
+								"type": "DatasetReference"
+							},
+							"name": "dsrecFacilities"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "yycRecFacilities",
+								"type": "DatasetReference"
+							},
+							"name": "dsRecreationFacilities",
+							"rejectedDataLinkedService": {
+								"referenceName": "ls_datalakestorage",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     httpMethod: 'GET',",
+						"     timeout: 30,",
+						"     requestInterval: 0,",
+						"     paginationRules: ['supportRFC5988' -> 'true'],",
+						"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dsrecFacilities",
+						"dsrecFacilities sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> dsRecreationFacilities"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_recFacilities')]",
+				"[concat(variables('factoryId'), '/datasets/yycRecFacilities')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline Move community disorder data to data lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfcommunitydisorder",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ingest_community_disorder",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"dfCommunityDisorder": {},
+									"dfdatalakestorage": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-07T17:43:29Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ingest_community_disorder')]"
+			]
+		}
+	]
+}
