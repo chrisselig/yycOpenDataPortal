@@ -1,0 +1,51 @@
+{
+	"name": "df_ingest_community_district_boundaries",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_communityDistrictBoundaries",
+						"type": "DatasetReference"
+					},
+					"name": "dscommunityDistrictBoundariesREST"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "yycCommunityDistrictBoundaries",
+						"type": "DatasetReference"
+					},
+					"name": "dsCommunityDistrictBoundariesDataLake",
+					"rejectedDataLinkedService": {
+						"referenceName": "ls_datalakestorage",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     httpMethod: 'GET',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     paginationRules: ['supportRFC5988' -> 'true'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dscommunityDistrictBoundariesREST",
+				"dscommunityDistrictBoundariesREST sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          body as ({:@computed_region_4a3i_ccfj} as string, {:@computed_region_4b54_tmc4} as string, {:@computed_region_kxmf_bzkv} as string, {:@computed_region_p8tp_5dkv} as string, address as string, community as string, name as string, non_emergency_info as string, point as (coordinates as string[], type as string), stn_num as string, modified_dt as string),",
+				"          headers as ({X-SODA2-Fields} as string, Vary as string, {Access-Control-Allow-Origin} as string, {Transfer-Encoding} as string, {Last-Modified} as string, Server as string, {Strict-Transport-Security} as string, {X-Socrata-RequestId} as string, {X-SODA2-Data-Out-Of-Date} as string, Connection as string, {X-SODA2-Types} as string, {X-Socrata-Region} as string, {X-SODA2-Secondary-Last-Modified} as string, Age as string, {Content-Type} as string, {X-SODA2-Truth-Last-Modified} as string, Date as string, ETag as string)",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> dsCommunityDistrictBoundariesDataLake"
+			]
+		}
+	}
+}
