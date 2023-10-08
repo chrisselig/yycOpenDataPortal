@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "surr-xmvs.json"
+			"relativeUrl": "surr-xmvs.csv"
 		},
 		"schema": []
 	}
