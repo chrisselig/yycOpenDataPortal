@@ -1,5 +1,5 @@
 # yycOpenDataPortal
-Using data for Calgary (YYC), hope to pull data together to provide further information on choosing a place to live in Calgary
+The goal of this project is to pull various data sets together relating to Calgary to help information decisions like where to rent an apartment or buy a house. This data goes beyond data normally found on MLS or Rentfaster and includes things like crime statistics, demographics, location of fire stations, EMS and Police locations.
 
 # Architecture
 Azure will be the cloud provider used. Below is what the high level architecture will look like.
