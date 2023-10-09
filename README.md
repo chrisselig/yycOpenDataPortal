@@ -14,6 +14,12 @@ Moving into the silver stage, some basic transformations take place, like column
 
 Finally, the data is moved to gold stage, where it is fully transformed into a star schema design.
 
+# Data Model - Star Schema
+
+End result is a star schema, with a fact table for community disorder statistics and multiple dimensions.
+
+![starschema](https://github.com/chrisselig/yycOpenDataPortal/blob/main/00_data_modeling/star_schema.png)
+
 # Analysis
 
 Preliminary analysis takes place using Python/SQL/Databricks
