@@ -77,26 +77,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_communityDistrictBoundaries')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_yycOpenDataPortal",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": "surr-xmvs.json"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_yycOpenDataPortal')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_emsLocations')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -286,141 +266,6 @@
 					}
 				},
 				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/yycCommunityDistrictBoundaries')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_datalakestorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "dirrawdata"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"body": {
-							"type": "object",
-							"properties": {
-								":@computed_region_4a3i_ccfj": {
-									"type": "string"
-								},
-								":@computed_region_4b54_tmc4": {
-									"type": "string"
-								},
-								":@computed_region_kxmf_bzkv": {
-									"type": "string"
-								},
-								":@computed_region_p8tp_5dkv": {
-									"type": "string"
-								},
-								"address": {
-									"type": "string"
-								},
-								"community": {
-									"type": "string"
-								},
-								"name": {
-									"type": "string"
-								},
-								"non_emergency_info": {
-									"type": "string"
-								},
-								"point": {
-									"type": "object",
-									"properties": {
-										"coordinates": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
-										},
-										"type": {
-											"type": "string"
-										}
-									}
-								},
-								"stn_num": {
-									"type": "string"
-								},
-								"modified_dt": {
-									"type": "string"
-								}
-							}
-						},
-						"headers": {
-							"type": "object",
-							"properties": {
-								"X-SODA2-Fields": {
-									"type": "string"
-								},
-								"Vary": {
-									"type": "string"
-								},
-								"Access-Control-Allow-Origin": {
-									"type": "string"
-								},
-								"Transfer-Encoding": {
-									"type": "string"
-								},
-								"Last-Modified": {
-									"type": "string"
-								},
-								"Server": {
-									"type": "string"
-								},
-								"Strict-Transport-Security": {
-									"type": "string"
-								},
-								"X-Socrata-RequestId": {
-									"type": "string"
-								},
-								"X-SODA2-Data-Out-Of-Date": {
-									"type": "string"
-								},
-								"Connection": {
-									"type": "string"
-								},
-								"X-SODA2-Types": {
-									"type": "string"
-								},
-								"X-Socrata-Region": {
-									"type": "string"
-								},
-								"X-SODA2-Secondary-Last-Modified": {
-									"type": "string"
-								},
-								"Age": {
-									"type": "string"
-								},
-								"Content-Type": {
-									"type": "string"
-								},
-								"X-SODA2-Truth-Last-Modified": {
-									"type": "string"
-								},
-								"Date": {
-									"type": "string"
-								},
-								"ETag": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
@@ -693,61 +538,144 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/df_ingest_community_district_boundaries')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/Pipeline Move community disorder data to data lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_communityDistrictBoundaries",
-								"type": "DatasetReference"
+				"activities": [
+					{
+						"name": "dfcommunitydisorder",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ingest_community_disorder",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"dfCommunityDisorder": {},
+									"dfdatalakestorage": {}
+								}
 							},
-							"name": "dscommunityDistrictBoundariesREST"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "yycCommunityDistrictBoundaries",
-								"type": "DatasetReference"
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
 							},
-							"name": "dsCommunityDistrictBoundariesDataLake",
-							"rejectedDataLinkedService": {
-								"referenceName": "ls_datalakestorage",
-								"type": "LinkedServiceReference"
-							}
+							"traceLevel": "Fine"
 						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     httpMethod: 'GET',",
-						"     timeout: 30,",
-						"     requestInterval: 0,",
-						"     paginationRules: ['supportRFC5988' -> 'true'],",
-						"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dscommunityDistrictBoundariesREST",
-						"dscommunityDistrictBoundariesREST sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          body as ({:@computed_region_4a3i_ccfj} as string, {:@computed_region_4b54_tmc4} as string, {:@computed_region_kxmf_bzkv} as string, {:@computed_region_p8tp_5dkv} as string, address as string, community as string, name as string, non_emergency_info as string, point as (coordinates as string[], type as string), stn_num as string, modified_dt as string),",
-						"          headers as ({X-SODA2-Fields} as string, Vary as string, {Access-Control-Allow-Origin} as string, {Transfer-Encoding} as string, {Last-Modified} as string, Server as string, {Strict-Transport-Security} as string, {X-Socrata-RequestId} as string, {X-SODA2-Data-Out-Of-Date} as string, Connection as string, {X-SODA2-Types} as string, {X-Socrata-Region} as string, {X-SODA2-Secondary-Last-Modified} as string, Age as string, {Content-Type} as string, {X-SODA2-Truth-Last-Modified} as string, Date as string, ETag as string)",
-						"     ),",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> dsCommunityDistrictBoundariesDataLake"
-					]
-				}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-07T17:43:29Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_communityDistrictBoundaries')]",
-				"[concat(variables('factoryId'), '/datasets/yycCommunityDistrictBoundaries')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_datalakestorage')]"
+				"[concat(variables('factoryId'), '/dataflows/df_ingest_community_disorder')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline Move rec facilities data to data lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfRecFacilities",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ingest_recreation_facilities",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"dsrecFacilities": {},
+									"dsRecreationFacilities": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-07T17:40:12Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ingest_recreation_facilities')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Pipeline move ems location to data lake')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dfemslocations",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ingest_ems_locations",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"dfemsLocations": {},
+									"dsemsLocations": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-07T17:44:42Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_ingest_ems_locations')]"
 			]
 		}
 	]
