@@ -6,6 +6,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "ds_communityDisorder",
+						"type": "DatasetReference"
+					},
 					"name": "dfCommunityDisorder"
 				}
 			],
@@ -25,7 +29,11 @@
 			"transformations": [],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> dfCommunityDisorder",
+				"     validateSchema: false,",
+				"     httpMethod: 'GET',",
+				"     timeout: 10,",
+				"     paginationRules: ['supportRFC5988' -> 'true'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dfCommunityDisorder",
 				"dfCommunityDisorder sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
