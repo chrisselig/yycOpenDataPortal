@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "s6f4-ijrf.json"
+			"relativeUrl": "s6f4-ijrf.csv"
 		},
 		"schema": []
 	},

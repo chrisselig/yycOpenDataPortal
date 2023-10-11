@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "hxfu-6d96.json"
+			"relativeUrl": "hxfu-6d96.csv"
 		},
 		"schema": []
 	},

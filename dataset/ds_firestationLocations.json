@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "cqsb-2hhg.json"
+			"relativeUrl": "cqsb-2hhg.csv"
 		},
 		"schema": []
 	},
