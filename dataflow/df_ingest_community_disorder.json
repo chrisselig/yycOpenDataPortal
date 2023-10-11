@@ -19,7 +19,11 @@
 						"referenceName": "yyccommunitydisorder",
 						"type": "DatasetReference"
 					},
-					"name": "dfdatalakestorage"
+					"name": "dfdatalakestorage",
+					"rejectedDataLinkedService": {
+						"referenceName": "ls_datalakestorage",
+						"type": "LinkedServiceReference"
+					}
 				}
 			],
 			"transformations": [],
