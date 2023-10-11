@@ -15,6 +15,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "yyccommunitydisorder",
+						"type": "DatasetReference"
+					},
 					"name": "dfdatalakestorage"
 				}
 			],
@@ -29,10 +33,21 @@
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dfCommunityDisorder",
 				"dfCommunityDisorder sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
+				"     input(",
+				"          CLASS as string,",
+				"          CLASS_CODE as string,",
+				"          COMM_CODE as string,",
+				"          NAME as string,",
+				"          SECTOR as string,",
+				"          SRG as string,",
+				"          COMM_STRUCTURE as string,",
+				"          MULTIPOLYGON as string",
+				"     ),",
+				"     umask: 0022,",
 				"     preCommands: [],",
-				"     postCommands: []) ~> dfdatalakestorage"
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> dfdatalakestorage"
 			]
 		}
 	}

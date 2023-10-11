@@ -14,6 +14,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "yycRecFacilities",
+						"type": "DatasetReference"
+					},
 					"name": "dsRecreationFacilities",
 					"rejectedDataLinkedService": {
 						"referenceName": "ls_datalakestorage",
@@ -32,10 +36,21 @@
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dsrecFacilities",
 				"dsrecFacilities sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
+				"     input(",
+				"          CLASS as string,",
+				"          CLASS_CODE as string,",
+				"          COMM_CODE as string,",
+				"          NAME as string,",
+				"          SECTOR as string,",
+				"          SRG as string,",
+				"          COMM_STRUCTURE as string,",
+				"          MULTIPOLYGON as string",
+				"     ),",
+				"     umask: 0022,",
 				"     preCommands: [],",
-				"     postCommands: []) ~> dsRecreationFacilities"
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> dsRecreationFacilities"
 			]
 		}
 	}
