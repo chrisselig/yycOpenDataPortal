@@ -1,0 +1,55 @@
+{
+	"name": "yyccommunitydisorder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_datalakestorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "dirrawdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CLASS",
+				"type": "String"
+			},
+			{
+				"name": "CLASS_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COMM_CODE",
+				"type": "String"
+			},
+			{
+				"name": "NAME",
+				"type": "String"
+			},
+			{
+				"name": "SECTOR",
+				"type": "String"
+			},
+			{
+				"name": "SRG",
+				"type": "String"
+			},
+			{
+				"name": "COMM_STRUCTURE",
+				"type": "String"
+			},
+			{
+				"name": "MULTIPOLYGON",
+				"type": "String"
+			}
+		]
+	}
+}
