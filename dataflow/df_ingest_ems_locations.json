@@ -14,10 +14,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "yycEmsLocations",
-						"type": "DatasetReference"
-					},
 					"name": "dsemsLocations",
 					"rejectedDataLinkedService": {
 						"referenceName": "ls_datalakestorage",
@@ -36,11 +32,10 @@
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dfemsLocations",
 				"dfemsLocations sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> dsemsLocations"
+				"     skipDuplicateMapOutputs: true,",
+				"     preCommands: [],",
+				"     postCommands: []) ~> dsemsLocations"
 			]
 		}
 	}

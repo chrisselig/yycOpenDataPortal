@@ -14,10 +14,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "yycPoliceOffices",
-						"type": "DatasetReference"
-					},
 					"name": "dfdatalakestoragepopo",
 					"rejectedDataLinkedService": {
 						"referenceName": "ls_datalakestorage",
@@ -36,11 +32,10 @@
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dspoliceoffices",
 				"dspoliceoffices sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> dfdatalakestoragepopo"
+				"     skipDuplicateMapOutputs: true,",
+				"     preCommands: [],",
+				"     postCommands: []) ~> dfdatalakestoragepopo"
 			]
 		}
 	}

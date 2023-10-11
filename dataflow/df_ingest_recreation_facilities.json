@@ -14,10 +14,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "yycRecFacilities",
-						"type": "DatasetReference"
-					},
 					"name": "dsRecreationFacilities",
 					"rejectedDataLinkedService": {
 						"referenceName": "ls_datalakestorage",
@@ -36,11 +32,10 @@
 				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dsrecFacilities",
 				"dsrecFacilities sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> dsRecreationFacilities"
+				"     skipDuplicateMapOutputs: true,",
+				"     preCommands: [],",
+				"     postCommands: []) ~> dsRecreationFacilities"
 			]
 		}
 	}
