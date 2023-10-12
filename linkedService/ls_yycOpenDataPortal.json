@@ -1,13 +1,13 @@
 {
 	"name": "ls_yycOpenDataPortal",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://data.calgary.ca/resource/",
+			"url": "https://data.calgary.ca/resource/h3h6-kgme.csv",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
