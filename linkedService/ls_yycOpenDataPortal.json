@@ -4,8 +4,8 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://data.calgary.ca/resource",
-			"enableServerCertificateValidation": true,
+			"url": "https://data.calgary.ca/resource/",
+			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		}
 	},
