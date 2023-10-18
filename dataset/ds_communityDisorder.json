@@ -5,10 +5,19 @@
 			"referenceName": "ls_yycOpenDataPortal",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"dataset": {
+				"type": "string",
+				"defaultValue": "'h3h6-kgme.csv'"
+			}
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "h3h6-kgme.csv"
+			"relativeUrl": {
+				"value": "@dataset().dataset",
+				"type": "Expression"
+			}
 		},
 		"schema": []
 	}
