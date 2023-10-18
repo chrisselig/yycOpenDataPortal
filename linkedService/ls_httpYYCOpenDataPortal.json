@@ -1,0 +1,12 @@
+{
+	"name": "ls_httpYYCOpenDataPortal",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://data.calgary.ca/resource/",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
