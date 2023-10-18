@@ -6,25 +6,13 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_communityDisorder",
+						"referenceName": "ds_communityDisorder2",
 						"type": "DatasetReference"
 					},
-					"name": "dsCommunityDisorder"
+					"name": "source1"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "yyccommunitydisorder",
-						"type": "DatasetReference"
-					},
-					"name": "dsCommunityDisorderCSV",
-					"rejectedDataLinkedService": {
-						"referenceName": "ls_datalakestorage",
-						"type": "LinkedServiceReference"
-					}
-				}
-			],
+			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
 				"parameters{",
@@ -33,27 +21,7 @@
 				"}",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     httpMethod: 'GET',",
-				"     timeout: 30,",
-				"     paginationRules: ['supportRFC5988' -> 'true'],",
-				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> dsCommunityDisorder",
-				"dsCommunityDisorder sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          CLASS as string,",
-				"          CLASS_CODE as string,",
-				"          COMM_CODE as string,",
-				"          NAME as string,",
-				"          SECTOR as string,",
-				"          SRG as string,",
-				"          COMM_STRUCTURE as string,",
-				"          MULTIPOLYGON as string",
-				"     ),",
-				"     umask: 0022,",
-				"     preCommands: [],",
-				"     postCommands: [],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> dsCommunityDisorderCSV"
+				"     ignoreNoFilesFound: false) ~> source1"
 			]
 		}
 	}
