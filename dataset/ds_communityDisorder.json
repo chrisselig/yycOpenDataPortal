@@ -19,7 +19,7 @@
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "@?page=dataset().dataset",
+				"value": "?page={dataset().dataset}",
 				"type": "Expression"
 			}
 		},
