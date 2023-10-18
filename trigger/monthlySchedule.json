@@ -13,12 +13,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "Pipeline Move community disorder data to data lake",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Pipeline move ems location to data lake",
 					"type": "PipelineReference"
 				}
