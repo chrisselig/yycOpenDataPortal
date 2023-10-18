@@ -9,13 +9,17 @@
 			"dataset": {
 				"type": "string",
 				"defaultValue": "'h3h6-kgme.csv'"
+			},
+			"base": {
+				"type": "string",
+				"defaultValue": "'https://data.calgary.ca/resource/'"
 			}
 		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
 			"relativeUrl": {
-				"value": "@dataset().dataset",
+				"value": "@concat(dataset().base,dataset().dataset)",
 				"type": "Expression"
 			}
 		},
