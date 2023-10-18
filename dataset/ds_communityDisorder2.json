@@ -1,0 +1,22 @@
+{
+	"name": "ds_communityDisorder2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_httpYYCOpenDataPortal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "h3h6-kgme.csv"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
